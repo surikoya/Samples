@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>India Flag</title>
+            <style>
+                body {
+					background:#ffffff;
+                }
+                #canvas {
+					background: #ffffff;
+					cursor: pointer;
+					left: 0px;
+					margin: 20px;
+					position: absolute;
+					top: 20px;
+                }
+            </style>
+        </head>
+    </body>
+        <canvas id="canvas" width="450" height="300"></canvas>
+        <script>
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+			var width = context.canvas.width,
+				height = context.canvas.height,
+				saffronColor = 'rgb(255,153,51)',
+				greenColor = 'rgb(19,136,8)',
+				wheelColor = 'rgb(0,0,128)',
+				redColor = 'rgb(127,0,0)',
+				SPOKE_COUNT = 24,
+				HAND_RADIUS = (height/6) -1;
+			function drawFlag()	{
+				context.beginPath();
+				context.rect(0,0,width,height/3);
+				context.fillStyle = saffronColor;
+				context.fill();
+				
+				context.beginPath();
+				context.arc(width/2,height/2,HAND_RADIUS, 0, Math.PI *2, true);
+				context.strokeStyle = wheelColor;
+				context.lineWidth = 2;
+				context.stroke();
+
+				for (var i = 1; i<= SPOKE_COUNT; i++) {
+					var ANGLE = Math.PI * i/12,
+						OUTER_ANGLE = Math.PI * (2 * i + 1)/24
+						HAND_LENGTH= HAND_RADIUS -2,
+						endX = width/2  + Math.cos(OUTER_ANGLE) * HAND_RADIUS,
+						endY = height/2 + Math.sin(OUTER_ANGLE) * HAND_RADIUS;
+					context.beginPath();
+					context.moveTo(width/2, height/2);
+					context.lineWidth = 2;
+					context.lineTo(width/2 + Math.cos(ANGLE) * HAND_LENGTH,
+									height/2 + Math.sin(ANGLE) * HAND_LENGTH);
+					context.strokeStyle = wheelColor;					
+					context.stroke();
+					
+					context.beginPath();
+					context.fillStyle = wheelColor;
+					context.arc(endX,endY,4, 3 * Math.PI /2 + ANGLE , Math.PI /2 + ANGLE + Math.PI/12 , true);
+					context.fill();
+				}
+				
+				context.beginPath();
+				context.arc(width/2,height/2,5, 0, Math.PI *2, true);
+				context.fillStyle = 'rgb(255,255,255)';
+				context.lineWidth = 1;
+				context.fill();
+
+				context.beginPath();
+				context.rect(0,2* height/3,width,height/3);
+				context.fillStyle = greenColor;
+				context.fill();
+			}
+			document.onload=drawFlag();
+        </script>
+    </body>
+</html> 
